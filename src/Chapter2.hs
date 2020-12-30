@@ -350,8 +350,12 @@ from it!
 
 ghci> :l src/Chapter2.hs
 -}
+
 subList :: Int -> Int -> [a] -> [a]
-subList = error "subList: Not implemented!"
+subList x y zs
+    | x < 0 || y < 0 = []
+    | otherwise = take (y - x + 1) (drop x zs) 
+
 
 {- |
 =⚔️= Task 4
@@ -363,8 +367,11 @@ Implement a function that returns only the first half of a given list.
 >>> firstHalf "bca"
 "b"
 -}
--- PUT THE FUNCTION TYPE IN HERE
-firstHalf l = error "firstHalf: Not implemented!"
+firstHalf :: [a] -> [a]
+firstHalf list = take arLength list
+    where 
+     arLength = (length list) `div` 2
+
 
 
 {- |
@@ -516,7 +523,9 @@ True
 >>> isThird42 [42, 42, 0, 42]
 False
 -}
-isThird42 = error "isThird42: Not implemented!"
+isThird42 :: (Eq a, Num a) => [a] -> Bool
+isThird42 ( _ : _ : 42 : _ ) = True
+isThird42 _ = False
 
 
 {- |

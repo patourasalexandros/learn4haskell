@@ -646,8 +646,13 @@ Write a function that takes elements of a list only in even positions.
 >>> takeEven [2, 1, 3, 5, 4]
 [2,3,4]
 -}
-takeEven = error "takeEven: Not implemented!"
-
+takeEven:: [a] -> [a]
+takeEven lst = go True lst
+  where
+    go:: Bool -> [a] -> [a]
+    go _ [] = []
+    go True (x:xs) = x:go False xs
+    go False (x:xs) = go True xs
 {- |
 =🛡= Higher-order functions
 

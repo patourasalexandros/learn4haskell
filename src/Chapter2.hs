@@ -653,6 +653,7 @@ takeEven lst = go True lst
     go _ [] = []
     go True (x:xs) = x:go False xs
     go False (x:xs) = go True xs
+
 {- |
 =🛡= Higher-order functions
 
@@ -757,8 +758,9 @@ value of the element itself
 
 🕯 HINT: Use combination of 'map' and 'replicate'
 -}
+
 smartReplicate :: [Int] -> [Int]
-smartReplicate l = error "smartReplicate: Not implemented!"
+smartReplicate lst = concat $ map (\ x -> replicate x x) lst
 
 {- |
 =⚔️= Task 9

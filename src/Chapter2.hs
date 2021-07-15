@@ -350,8 +350,12 @@ from it!
 
 ghci> :l src/Chapter2.hs
 -}
+
 subList :: Int -> Int -> [a] -> [a]
-subList = error "subList: Not implemented!"
+subList x y zs
+    | x < 0 || y < 0 = []
+    | otherwise = take (y - x + 1) (drop x zs) 
+
 
 {- |
 =⚔️= Task 4
@@ -363,8 +367,11 @@ Implement a function that returns only the first half of a given list.
 >>> firstHalf "bca"
 "b"
 -}
--- PUT THE FUNCTION TYPE IN HERE
-firstHalf l = error "firstHalf: Not implemented!"
+firstHalf :: [a] -> [a]
+firstHalf list = take arLength list
+    where 
+     arLength = (length list) `div` 2
+
 
 
 {- |
@@ -516,7 +523,9 @@ True
 >>> isThird42 [42, 42, 0, 42]
 False
 -}
-isThird42 = error "isThird42: Not implemented!"
+isThird42 :: (Eq a, Num a) => [a] -> Bool
+isThird42 ( _ : _ : 42 : _ ) = True
+isThird42 _ = False
 
 
 {- |
@@ -621,7 +630,8 @@ Implement a function that duplicates each element of the list
 
 -}
 duplicate :: [a] -> [a]
-duplicate = error "duplicate: Not implemented!"
+duplicate [] = []
+duplicate (x:xs) = x:x:duplicate xs
 
 
 {- |
@@ -636,7 +646,13 @@ Write a function that takes elements of a list only in even positions.
 >>> takeEven [2, 1, 3, 5, 4]
 [2,3,4]
 -}
-takeEven = error "takeEven: Not implemented!"
+takeEven:: [a] -> [a]
+takeEven lst = go True lst
+  where
+    go:: Bool -> [a] -> [a]
+    go _ [] = []
+    go True (x:xs) = x:go False xs
+    go False (x:xs) = go True xs
 
 {- |
 =🛡= Higher-order functions
@@ -742,8 +758,9 @@ value of the element itself
 
 🕯 HINT: Use combination of 'map' and 'replicate'
 -}
+
 smartReplicate :: [Int] -> [Int]
-smartReplicate l = error "smartReplicate: Not implemented!"
+smartReplicate lst = concat $ map (\ x -> replicate x x) lst
 
 {- |
 =⚔️= Task 9
@@ -756,7 +773,9 @@ the list with only those lists that contain a passed element.
 
 🕯 HINT: Use the 'elem' function to check whether an element belongs to a list
 -}
-contains = error "contains: Not implemented!"
+contains:: Int -> [[Int]] -> [[Int]]
+contains x list = filter (elem x) list
+
 
 
 {- |
@@ -857,7 +876,13 @@ list.
 
 🕯 HINT: Use the 'cycle' function
 -}
-rotate = error "rotate: Not implemented!"
+rotate:: Int -> [a] -> [a]
+rotate n l
+  | n < 0 = []
+  | null l = []
+  | otherwise = 
+    let len = length l
+    in take len (drop (mod n len) (cycle l)) 
 
 {- |
 =💣= Task 12*
@@ -873,7 +898,9 @@ and reverses it.
   function, but in this task, you need to implement it manually. No
   cheating!
 -}
-rewind = error "rewind: Not Implemented!"
+rewind:: [a] -> [a]
+rewind [] = []
+rewind (x:xs) = rewind xs ++ [x]
 
 
 {-
